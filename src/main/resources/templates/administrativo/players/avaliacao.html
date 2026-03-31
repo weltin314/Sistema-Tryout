@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Avaliação de Jogadores</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2c2c54);
+            color: white;
+        }
+
+        .navbar {
+            width: 100%;
+            background: #1a1a2e;
+            padding: 12px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #00a8ff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: #0097e6;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .roles {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .role-btn {
+            padding: 10px;
+            background: #2f2f4f;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .player-card {
+            background: #2f2f4f;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .param {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .stars i {
+            color: gray;
+            cursor: pointer;
+        }
+
+        .stars i.selected {
+            color: gold;
+        }
+
+        .notes-area {
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 8px;
+            padding: 10px;
+            background: #1e1e2f;
+            color: white;
+            border: none;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00a8ff, #0097e6);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .role-btn {
+    padding: 10px;
+    background: #2f2f4f;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.role-btn img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.role-btn:hover {
+    background: #50507a;
+    transform: scale(1.1);
+}
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>🎮 Sistema Tryout</h2>
+
+    <div class="nav-links">
+        <a th:href="@{/administrativo}" class="nav-btn">
+            <i class="fa-solid fa-house"></i> Home
+        </a>
+
+        <a href="/listarPlayer" class="nav-btn">
+            <i class="fa-solid fa-list"></i> Jogadores
+        </a>
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="roles">
+
+        <div class="role-btn" onclick="showRole('Top')">
+            <img src="/img/logo_top.png" alt="Top">
+        </div>
+
+        <div class="role-btn" onclick="showRole('Jungle')">
+            <img src="/img/logo_jungle.png" alt="Jungle">
+        </div>
+
+        <div class="role-btn" onclick="showRole('Mid')">
+            <img src="/img/logo_mid.png" alt="Mid">
+        </div>
+
+        <div class="role-btn" onclick="showRole('Adc')">
+            <img src="/img/logo_adc.png" alt="Adc">
+        </div>
+
+        <div class="role-btn" onclick="showRole('Support')">
+            <img src="/img/logo_suporte.png" alt="Support">
+        </div>
+
+    </div>
+
+    <form th:action="@{/avaliacao/salvar-todos}" method="post">
+
+        <div th:each="player : ${players}" class="player-card" th:attr="data-role=${player.role}">
+
+            <h3 th:text="${player.name}"></h3>
+
+
+            <div class="param">
+                <span>Comunicação:</span>
+                <input type="hidden"
+                       th:name="'avaliacoes[' + ${player.id} + '].comunicacao'"
+                       th:value="${avaliacoesMap[player.id].comunicacao != null ? avaliacoesMap[player.id].comunicacao : 0}"/>
+                <div class="stars"></div>
+            </div>
+
+            <div class="param">
+                <span>Conhecimento:</span>
+                <input type="hidden"
+                       th:name="'avaliacoes[' + ${player.id} + '].conhecimento'"
+                       th:value="${avaliacoesMap[player.id].conhecimento != null ? avaliacoesMap[player.id].conhecimento : 0}"/>
+                <div class="stars"></div>
+            </div>
+
+            <div class="param">
+                <span>Fase de Rota:</span>
+                <input type="hidden"
+                       th:name="'avaliacoes[' + ${player.id} + '].faseRota'"
+                       th:value="${avaliacoesMap[player.id].faseRota != null ? avaliacoesMap[player.id].faseRota : 0}"/>
+                <div class="stars"></div>
+            </div>
+
+            <div class="param">
+                <span>Fight:</span>
+                <input type="hidden"
+                       th:name="'avaliacoes[' + ${player.id} + '].fight'"
+                       th:value="${avaliacoesMap[player.id].fight != null ? avaliacoesMap[player.id].fight : 0}"/>
+                <div class="stars"></div>
+            </div>
+
+            <div class="param">
+                <span>Champion Pool:</span>
+                <input type="hidden"
+                       th:name="'avaliacoes[' + ${player.id} + '].championPool'"
+                       th:value="${avaliacoesMap[player.id].championPool != null ? avaliacoesMap[player.id].championPool : 0}"/>
+                <div class="stars"></div>
+            </div>
+
+
+            <textarea
+                    class="notes-area"
+                    th:name="'avaliacoes[' + ${player.id} + '].anotacao'"
+                    th:text="${avaliacoesMap[player.id].anotacao}"
+                    placeholder="Escreva uma análise do jogador..."
+            ></textarea>
+
+        </div>
+
+        <button type="submit" class="submit-btn">
+            <i class="fa-solid fa-floppy-disk"></i>
+            Salvar Avaliações
+        </button>
+    </form>
+
+</div>
+
+<script>
+    document.querySelectorAll('.player-card').forEach(card => {
+
+      card.querySelectorAll('.param').forEach(param => {
+
+        const input = param.querySelector('input');
+        const starsDiv = param.querySelector('.stars');
+        const currentValue = parseInt(input.value);
+
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement('i');
+          star.className = 'fa-regular fa-star';
+          star.dataset.value = i;
+
+          if (i <= currentValue) {
+            star.classList.add('selected');
+          }
+
+          starsDiv.appendChild(star);
+        }
+
+        starsDiv.addEventListener('click', e => {
+          if (!e.target.dataset.value) return;
+
+          input.value = e.target.dataset.value;
+
+          starsDiv.querySelectorAll('i').forEach(star => {
+            star.classList.toggle('selected',
+              parseInt(star.dataset.value) <= parseInt(input.value)
+            );
+          });
+        });
+
+      });
+
+    });
+
+    function showRole(role) {
+      document.querySelectorAll('.player-card').forEach(card => {
+        card.style.display = (card.dataset.role === role) ? 'block' : 'none';
+      });
+    }
+</script>
+
+</body>
+</html>

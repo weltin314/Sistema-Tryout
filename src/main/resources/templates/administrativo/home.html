@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sistema Tryout</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0f1a, #1c1c3a);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background: #1e1e2f;
+            padding: 40px;
+            border-radius: 15px;
+            width: 400px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #bbb;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .cadastro {
+            background: #00a8ff;
+        }
+
+        .cadastro:hover {
+            background: #0097e6;
+        }
+
+        .lista {
+            background: #4cd137;
+        }
+
+        .lista:hover {
+            background: #44bd32;
+        }
+
+        .logo {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .logo img {
+    width: 80px;
+    height: auto;
+}
+
+@media (min-width: 768px) {
+    .logo img {
+        width: 140px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <img src="img/logo_sistematryout_peq.png" alt="Sistema Tryout">
+    </div>
+
+    <h1>Sistema Tryout</h1>
+    <p>Gerencie e avalie jogadores para sua equipe</p>
+
+<a href="/cadastroPlayer" class="btn cadastro">
+    ➕ Cadastrar Jogador
+</a>
+
+<a href="/listarPlayer" class="btn lista">
+    📋 Lista de Jogadores
+</a>
+
+<div class="footer">
+    League Tryout System ⚡
+</div>
+
+</div>
+
+</body>
+</html>

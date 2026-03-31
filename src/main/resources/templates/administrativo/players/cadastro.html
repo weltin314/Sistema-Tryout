@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cadastro de Jogador</title>
+    <meta charset="UTF-8">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2c2c54);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #2f2f4f;
+            padding: 30px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+        }
+
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            box-shadow: 0 0 5px #00a8ff;
+        }
+
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        /* botão cadastrar */
+        .btn-primary {
+            background: #00a8ff;
+        }
+
+        .btn-primary:hover {
+            background: #0097e6;
+        }
+
+        /* botão lista */
+        .btn-success {
+            background: #4cd137;
+        }
+
+        .btn-success:hover {
+            background: #44bd32;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Cadastro de Jogador</h1>
+
+    <form th:action="@{/salvarPlayer}" th:object="${player}" method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <label>Nick</label>
+        <input type="text" th:field="*{name}" placeholder="Digite o nick" required>
+
+        <label>Idade</label>
+        <input type="number" th:field="*{age}" min="0" placeholder="Digite a idade" required>
+
+        <label>Função</label>
+        <select th:field="*{role}" required>
+            <option value="">Selecione uma função</option>
+            <option value="Top">Top</option>
+            <option value="Jungle">Jungle</option>
+            <option value="Mid">Mid</option>
+            <option value="Adc">Adc</option>
+            <option value="Support">Support</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">
+            Cadastrar
+        </button>
+
+        <a href="/listarPlayer" class="btn btn-success">
+            Lista de Jogadores
+        </a>
+
+    </form>
+
+    <div class="footer">
+        Sistema Tryout ⚡
+    </div>
+</div>
+
+</body>
+</html>
